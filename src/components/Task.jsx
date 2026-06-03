@@ -1,15 +1,17 @@
+
 export default function Task(){
+
   return(
     <>
       <li>
-        <div class="view">
-          <input class="toggle" type="checkbox" />
+        <div className="view">
+          <input className="toggle" type="checkbox" />
           <label>
-            <span class="description">Active task</span>
-            <span class="created">created 5 minutes ago</span>
+            <span className="description">Active task</span>
+            <span className="created">created 5 minutes ago</span>
           </label>
-          <button class="icon icon-edit"></button>
-          <button class="icon icon-destroy"></button>
+          <button className="icon icon-edit"></button>
+          <button className="icon icon-destroy"></button>
         </div>
       </li>
     </>

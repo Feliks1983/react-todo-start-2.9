@@ -1,9 +1,12 @@
-import Task from "./Task"
 
-export default function NewTaskForm(props){
+
+export default function NewTaskForm(){
   return (
     <>
-      <Task value={props.value} />
+      <header className="header">
+        <h1>todos</h1>
+        <input className="new-todo" placeholder="What needs to be done?" autofocus />
+      </header>
     </>
   )
 }
