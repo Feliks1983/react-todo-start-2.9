@@ -1,18 +1,18 @@
 
-export default function Task(){
+export default function Task(props){
 
   return(
     <>
-      <li>
-        <div className="view">
-          <input className="toggle" type="checkbox" />
-          <label>
-            <span className="description">Active task</span>
-            <span className="created">created 5 minutes ago</span>
-          </label>
-          <button className="icon icon-edit"></button>
-          <button className="icon icon-destroy"></button>
-        </div>
+      <li className={props.className}>
+          <div className="view">
+            <input key={props.id} className="toggle" type="checkbox" />
+            <label>
+              <span className="description">{props.description}</span>
+              <span className="created">{props.created}</span>
+            </label>
+            <button className="icon icon-edit"></button>
+            <button className="icon icon-destroy"></button>
+          </div>
       </li>
     </>
   )
