@@ -9,10 +9,6 @@ export default function TaskList(props){
   key={task.id}
   description={task.description} 
   created={task.created}
-  onToggleClass={task.onToggleClass}
-  onDeleteTask={task.onDeleteTask}
-  onStartEdit={task.onStartEdit}
-  onSaveEdit={task.onSaveEdit}
   />);
   
   return(
