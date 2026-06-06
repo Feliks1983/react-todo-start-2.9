@@ -1,6 +1,5 @@
 
 export default function Task(props){
-
   return(
     <>
       <li className={props.className}>
@@ -13,6 +12,9 @@ export default function Task(props){
             <button className="icon icon-edit"></button>
             <button className="icon icon-destroy"></button>
           </div>
+          {props.className === 'editing' && (
+            <input type="text" className="edit" defaultValue={props.description} />
+          )}
       </li>
     </>
   )
