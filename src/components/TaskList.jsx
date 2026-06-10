@@ -1,21 +1,23 @@
 import Task from './Task';
 
-
-export default function TaskList(props){
-
-  const taskList = props.tasks.map((task) => 
-  <Task 
-  className={task.className} 
-  key={task.id}
-  description={task.description} 
-  created={task.created}
-  />);
-  
-  return(
-    <>
-    <ul className="todo-list">
-        {taskList}
-    </ul>
-    </>
-  )
+export default function TaskList({ 
+  tasks, 
+  onToggle, 
+  onDelete, 
+  onStartEditing, 
+  onSave }) {
+  return (
+      <ul className="todo-list">
+        {tasks.map((task) => (
+          <Task
+            key={task.id}
+            task={task}
+            onToggle={onToggle}
+            onDelete={onDelete}
+            onStartEditing={onStartEditing}
+            onSave={onSave}
+          />
+        ))}
+      </ul>
+  );
 }
