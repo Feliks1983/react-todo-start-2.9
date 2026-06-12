@@ -1,13 +1,14 @@
-import { useState } from 'react';
+import { useState } from "react";
+import PropTypes from "prop-types";
 
 export default function NewTaskForm({ handleAddTask }) {
-  const [text, setText] = useState('');
+  const [text, setText] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (text) {
       handleAddTask(text);
-      setText('');
+      setText("");
     }
   };
 
@@ -26,3 +27,11 @@ export default function NewTaskForm({ handleAddTask }) {
     </header>
   );
 }
+
+NewTaskForm.propTypes = {
+  handleAddTask: PropTypes.func.isRequired,
+};
+
+NewTaskForm.defaultProps = {
+  handleAddTask: function () {},
+};
