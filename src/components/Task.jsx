@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import PropTypes from "prop-types";
 import { formatDistanceToNow } from "date-fns";
 import { ru } from "date-fns/locale";
@@ -11,14 +11,8 @@ export default function Task({
   onSave,
 }) {
   const [editText, setEditText] = useState(task.text);
-  const inputRef = useRef(null);
-
-  useEffect(() => {
-    if (task.isEditing && inputRef.current) {
-      inputRef.current.focus();
-    }
-  }, [task.isEditing]);
-
+  const inputRef = useRef(false);
+  console.log(task.id);
   function handleKeyDown(e) {
     if (e.key === "Enter") {
       onSave(task.id, editText);
@@ -32,22 +26,12 @@ export default function Task({
     .filter(Boolean)
     .join(" ");
 
-  const timeAgoSeconds = formatDistanceToNow(new Date(task.created), {
-    includeSeconds: true,
-    addSuffix: true,
-    locale: ru,
-  });
-
-  const timeAgoMinuts = formatDistanceToNow(new Date(task.created), {
-    includeMinutes: true,
-    addSuffix: true,
-    locale: ru,
-  });
-
   return (
     <li className={liClassName}>
       <div className="view">
         <input
+          id={task.id}
+          ref={inputRef}
           className="toggle"
           defaultValue={editText}
           type="checkbox"
@@ -56,7 +40,13 @@ export default function Task({
         />
         <label onDoubleClick={() => onStartEditing(task.id)}>
           <span className="description">{task.text}</span>
-          <span className="created">{`создано ${timeAgoSeconds}/${timeAgoMinuts}`}</span>
+          <span className="created">
+            {formatDistanceToNow(new Date(task.created), {
+              includeSeconds: true,
+              addSuffix: true,
+              locale: ru,
+            })}
+          </span>
         </label>
         <button
           className="icon icon-edit"
@@ -70,6 +60,7 @@ export default function Task({
         ></button>
       </div>
       <input
+        id={task.id}
         ref={inputRef}
         type="text"
         className="edit"
@@ -89,7 +80,6 @@ Task.propTypes = {
     completed: PropTypes.bool.isRequired,
     created: PropTypes.oneOfType([PropTypes.number, PropTypes.instanceOf(Date)])
       .isRequired,
-    isEditing: PropTypes.bool.isRequired,
   }).isRequired,
   onToggle: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,

@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 
-export default function TasksFilter({ onFilter, onFilterChange }) {
+export default function TasksFilter({ Filter, FilterChange }) {
   const filters = ["all", "active", "completed"];
 
   return (
@@ -8,8 +8,8 @@ export default function TasksFilter({ onFilter, onFilterChange }) {
       {filters.map((filter) => (
         <li key={filter}>
           <button
-            className={onFilter === filter ? "selected" : ""}
-            onClick={() => onFilterChange(filter)}
+            className={Filter === filter ? "selected" : ""}
+            onClick={() => FilterChange(filter)}
           >
             {filter.charAt(0).toUpperCase() + filter.slice(1)}
           </button>
@@ -20,8 +20,8 @@ export default function TasksFilter({ onFilter, onFilterChange }) {
 }
 
 TasksFilter.propTypes = {
-  onFilter: PropTypes.string.isRequired,
-  onFilterChange: PropTypes.func.isRequired,
+  Filter: PropTypes.string.isRequired,
+  FilterChange: PropTypes.func.isRequired,
 };
 
 TasksFilter.defaultProps = {

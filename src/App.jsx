@@ -9,13 +9,12 @@ const initialTasks = dataList.map((item, index) => ({
   text: item.title,
   completed: item.completed,
   created: Date.now() - (index + 1) * 1000 * 60,
-  isEditing: false,
 }));
 
-const newId = (tasks) => {
-  if (tasks.length === 0) return 1;
-  return Math.max(...tasks.map((task) => task.id)) + 1;
-};
+let newId =
+  initialTasks.length > 0
+    ? Math.max(...initialTasks.map((task) => task.id)) + 1
+    : 1;
 
 export default function App() {
   const [todoList, setTodoList] = useState(initialTasks);
@@ -62,9 +61,8 @@ export default function App() {
   }
 
   function handleAddTask(text) {
-    const getNewId = newId(todoList);
     const newTask = {
-      id: getNewId,
+      id: newId++,
       text,
       completed: false,
       created: Date.now(),
@@ -85,7 +83,6 @@ export default function App() {
       <NewTaskForm handleAddTask={handleAddTask} />
       <section className="main">
         <TaskList
-          key={todoList.id}
           tasks={filteredTasks}
           onToggle={handleChangeTask}
           onDelete={handleDeleteTask}
@@ -94,10 +91,10 @@ export default function App() {
         />
       </section>
       <Footer
-        onActiveCount={activeCount}
-        onCompletedCount={completedCount}
-        onFilter={filter}
-        onFilterChange={setFilter}
+        ActiveCount={activeCount}
+        CompletedCount={completedCount}
+        Filter={filter}
+        FilterChange={setFilter}
         onClearCompleted={clearCompleted}
       />
     </section>

@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import PropTypes from "prop-types";
 
 export default function NewTaskForm({ handleAddTask }) {
   const [text, setText] = useState("");
-
+  const inputRef = useRef(false);
   const handleSubmit = (e) => {
     e.preventDefault();
     if (text) {
@@ -11,12 +11,12 @@ export default function NewTaskForm({ handleAddTask }) {
       setText("");
     }
   };
-
   return (
     <header className="header">
       <h1>todos</h1>
       <form onSubmit={handleSubmit}>
         <input
+          ref={inputRef}
           className="new-todo"
           placeholder="What needs to be done?"
           autoFocus

@@ -12,6 +12,7 @@ export default function TaskList({
     <ul className="todo-list">
       {tasks.map((task) => (
         <Task
+          id={task.id}
           key={task.id}
           task={task}
           onToggle={onToggle}
@@ -31,7 +32,6 @@ TaskList.propTypes = {
     completed: PropTypes.bool.isRequired,
     created: PropTypes.oneOfType([PropTypes.number, PropTypes.instanceOf(Date)])
       .isRequired,
-    isEditing: PropTypes.bool.isRequired,
   }).isRequired,
   onToggle: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
