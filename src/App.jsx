@@ -11,10 +11,10 @@ const initialTasks = dataList.map((item, index) => ({
   created: Date.now() - (index + 1) * 1000 * 60,
 }));
 
-let newId =
-  initialTasks.length > 0
-    ? Math.max(...initialTasks.map((task) => task.id)) + 1
-    : 1;
+let newId = (tasks) => {
+  if (tasks.length === 0) return 1;
+  return Math.max(...tasks.map((task) => task.id)) + 1;
+};
 
 export default function App() {
   const [todoList, setTodoList] = useState(initialTasks);
@@ -30,14 +30,6 @@ export default function App() {
 
   function handleDeleteTask(id) {
     setTodoList(todoList.filter((task) => task.id !== id));
-  }
-
-  function startEditing(id) {
-    setTodoList(
-      todoList.map((task) =>
-        task.id === id ? { ...task, isEditing: true } : task,
-      ),
-    );
   }
 
   function saveTask(id, newText) {
@@ -61,12 +53,12 @@ export default function App() {
   }
 
   function handleAddTask(text) {
+    let todoId = newId(todoList);
     const newTask = {
-      id: newId++,
+      id: todoId,
       text,
       completed: false,
       created: Date.now(),
-      isEditing: false,
     };
     setTodoList([...todoList, newTask]);
   }
@@ -86,7 +78,6 @@ export default function App() {
           tasks={filteredTasks}
           onToggle={handleChangeTask}
           onDelete={handleDeleteTask}
-          onStartEditing={startEditing}
           onSave={saveTask}
         />
       </section>

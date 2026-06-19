@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 export default function NewTaskForm({ handleAddTask }) {
   const [text, setText] = useState("");
-  const inputRef = useRef(false);
+  const inputRef = useRef(null);
   const handleSubmit = (e) => {
     e.preventDefault();
     if (text) {

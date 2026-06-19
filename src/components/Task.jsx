@@ -7,21 +7,36 @@ export default function Task({
   task,
   onToggle,
   onDelete,
-  onStartEditing,
+
   onSave,
 }) {
   const [editText, setEditText] = useState(task.text);
-  const inputRef = useRef(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const inputRef = useRef(null);
   console.log(task.id);
+
+  function startEditing() {
+    setEditText(task.text);
+    setIsEditing(true);
+  }
+
+  function handleSave() {
+    if (editText.trim()) {
+      onSave(task.id, editText.trim());
+    }
+    setIsEditing(false);
+  }
+
   function handleKeyDown(e) {
     if (e.key === "Enter") {
-      onSave(task.id, editText);
+      e.preventDefault();
+      handleSave();
     }
   }
 
   const liClassName = [
     task.completed ? "completed" : "",
-    task.isEditing ? "editing" : "",
+    isEditing ? "editing" : "",
   ]
     .filter(Boolean)
     .join(" ");
@@ -30,15 +45,13 @@ export default function Task({
     <li className={liClassName}>
       <div className="view">
         <input
-          id={task.id}
-          ref={inputRef}
           className="toggle"
           defaultValue={editText}
           type="checkbox"
           defaultChecked={task.completed}
           onChange={() => onToggle(task.id)}
         />
-        <label onDoubleClick={() => onStartEditing(task.id)}>
+        <label onDoubleClick={startEditing}>
           <span className="description">{task.text}</span>
           <span className="created">
             {formatDistanceToNow(new Date(task.created), {
@@ -50,7 +63,7 @@ export default function Task({
         </label>
         <button
           className="icon icon-edit"
-          onClick={() => onStartEditing(task.id)}
+          onClick={startEditing}
           aria-label="Edit task"
         ></button>
         <button
@@ -64,9 +77,9 @@ export default function Task({
         ref={inputRef}
         type="text"
         className="edit"
-        value={editText}
+        defaultValue={editText}
         onChange={(e) => setEditText(e.target.value)}
-        onBlur={() => onSave(task.id, editText)}
+        onBlur={handleSave}
         onKeyDown={handleKeyDown}
       />
     </li>
@@ -83,7 +96,6 @@ Task.propTypes = {
   }).isRequired,
   onToggle: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
-  onStartEditing: PropTypes.func.isRequired,
   onSave: PropTypes.func.isRequired,
 };
 
@@ -91,6 +103,5 @@ Task.defaultProps = {
   task: [],
   onToggle: function () {},
   onDelete: function () {},
-  onStartEditing: function () {},
   onSave: function () {},
 };

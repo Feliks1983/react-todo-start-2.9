@@ -5,19 +5,16 @@ export default function TaskList({
   tasks,
   onToggle,
   onDelete,
-  onStartEditing,
   onSave,
 }) {
   return (
     <ul className="todo-list">
       {tasks.map((task) => (
         <Task
-          id={task.id}
           key={task.id}
           task={task}
           onToggle={onToggle}
           onDelete={onDelete}
-          onStartEditing={onStartEditing}
           onSave={onSave}
         />
       ))}
@@ -35,7 +32,6 @@ TaskList.propTypes = {
   }).isRequired,
   onToggle: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
-  onStartEditing: PropTypes.func.isRequired,
   onSave: PropTypes.func.isRequired,
 };
 
@@ -43,6 +39,5 @@ Task.defaultProps = {
   tasks: [],
   onToggle: function () {},
   onDelete: function () {},
-  onStartEditing: function () {},
   onSave: function () {},
 };
