@@ -7,7 +7,6 @@ export default function Task({
   task,
   onToggle,
   onDelete,
-
   onSave,
 }) {
   const [editText, setEditText] = useState(task.text);
