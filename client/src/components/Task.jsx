@@ -3,16 +3,10 @@ import PropTypes from "prop-types";
 import { formatDistanceToNow } from "date-fns";
 import { ru } from "date-fns/locale";
 
-export default function Task({
-  task,
-  onToggle,
-  onDelete,
-  onSave,
-}) {
+export default function Task({ task, onToggle, onDelete, onSave }) {
   const [editText, setEditText] = useState(task.text);
   const [isEditing, setIsEditing] = useState(false);
   const inputRef = useRef(null);
-  console.log(task.id);
 
   function startEditing() {
     setEditText(task.text);
@@ -32,6 +26,10 @@ export default function Task({
       handleSave();
     }
   }
+
+  const createdDate = task.createdAt ? new Date(task.createdAt) : null;
+
+  const validCreatedDate = createdDate && !Number.isNaN(createdDate.getTime());
 
   const liClassName = [
     task.completed ? "completed" : "",
@@ -53,11 +51,13 @@ export default function Task({
         <label onDoubleClick={startEditing}>
           <span className="description">{task.text}</span>
           <span className="created">
-            {formatDistanceToNow(new Date(task.created), {
-              includeSeconds: true,
-              addSuffix: true,
-              locale: ru,
-            })}
+            {validCreatedDate
+              ? formatDistanceToNow(createdDate, {
+                  includeSeconds: true,
+                  addSuffix: true,
+                  locale: ru,
+                })
+              : "Дата неизвестна"}
           </span>
         </label>
         <button
